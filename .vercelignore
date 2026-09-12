@@ -1,0 +1,5 @@
+server.py
+start-local.ps1
+start-local.bat
+*.pyc
+__pycache__/
