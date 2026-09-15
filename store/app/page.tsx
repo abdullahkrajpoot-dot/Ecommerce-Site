@@ -1,196 +1,87 @@
-import React from 'react';
+"use client";
+
 import Link from 'next/link';
 import Image from 'next/image';
-import { PackageSearch, CreditCard, ArrowRight, Star, Search, ShoppingCart, ChevronDown, Menu, Truck, RotateCcw, Headset } from 'lucide-react';
+import { ArrowRight, BadgeCheck, Banknote, ChefHat, ChevronDown, CircleDollarSign, Globe2, Headphones, Mail, Menu, MessageCircle, PackageSearch, Search, Send, ShoppingCart, Sparkles, TrendingUp, Truck, Watch } from 'lucide-react';
 
-// Static Data for Categories and Testimonials
-const categories = [
-  { name: 'Smart Cameras', image: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=800&auto=format&fit=crop' },
-  { name: 'Desk Lamps', image: 'https://images.unsplash.com/photo-1543512214-318c7553f230?q=80&w=800&auto=format&fit=crop' },
-  { name: 'Solar Lights', image: 'https://images.unsplash.com/photo-1494994301519-2e60cd092872?q=80&w=800&auto=format&fit=crop' },
-  { name: 'Premium Audio', image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=800&auto=format&fit=crop' },
+const groups = [
+  { category: 'Smart Gadgets', image: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?q=80&w=800&auto=format&fit=crop', items: ['Mini Bluetooth Speaker','Power Bank 10000mAh','Fast Charging Cable','Mobile Phone Stand','Ring Light Clip','Rechargeable Mini Fan','USB Desk Humidifier','Smart LED Strip','Wireless Charging Pad','Car Mobile Holder','Mini Projector','WiFi Smart Plug','Digital Alarm Clock','Handheld Game Console','USB Type-C Hub','Portable Photo Printer','Smart Doorbell Camera','Bluetooth Selfie Remote','Laptop Cooling Pad','Cable Organizer','Rechargeable Torch','Mini Vacuum Cleaner','Travel Adapter','Electric Lint Remover','LED Message Board','Magnetic Phone Mount','Digital Luggage Scale'] },
+  { category: 'Smart Watches', image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=800&auto=format&fit=crop', items: ['Ultra Smart Watch Series 9','FitPro Activity Tracker','Kids GPS Smart Watch','Amoled Round Dial Watch','Classic Steel Smart Watch','Fitness Heart Rate Band','Rose Gold Smart Watch','Rugged Outdoor Watch','Bluetooth Calling Watch','Sports Silicone Watch','Watch Screen Protector','Magnetic Watch Charger','Nylon Watch Strap','Metal Mesh Watch Band','Waterproof Digital Watch','Sleep Tracking Band','Dual Strap Smart Watch','ECG Health Monitor Watch','Touch Screen Square Watch','Mini Kids Smart Watch','Watch Protective Case','Leather Loop Strap','Step Counter Watch','Watch Charging Dock','Sports Watch Combo','GPS Running Watch','Prayer Time Digital Watch'] },
+  { category: 'Kitchen Gadgets', image: 'https://images.unsplash.com/photo-1556911220-bff31c812dba?q=80&w=800&auto=format&fit=crop', items: ['Electric Vegetable Chopper','Manual Food Slicer','Oil Spray Bottle','Silicone Air Fryer Liner','Digital Kitchen Scale','Portable Blender Bottle','Multifunction Can Opener','Stainless Garlic Press','Egg Storage Box','Sink Drain Basket','Mini Waffle Maker','Reusable Storage Bags','Vegetable Peeler Set','Spice Jar Organizer','Silicone Spoon Set','Non Stick Grill Pan','Oil Dispenser Bottle','Dish Drying Rack','Microwave Splatter Cover','Electric Milk Frother','Dough Scraper Set','Ice Cube Tray Lid','Lunch Box with Cutlery','Water Bottle Pump','Mini Coffee Grinder','Kitchen Sink Caddy','Rotating Spice Rack'] },
+  { category: 'Fashion Accessories', image: 'https://images.unsplash.com/photo-1523779917675-b6ed3a42a561?q=80&w=800&auto=format&fit=crop', items: ['Minimalist Wallet','Polarized Sunglasses','Leather Belt for Men','Crossbody Phone Bag','Ladies Tote Bag','Classic Baseball Cap','Steel Bracelet','Adjustable Ring Set','Pearl Hair Clip Set','Silk Scrunchies Pack','Travel Makeup Pouch','Fashion Scarf','Leather Card Holder','Canvas Shoulder Bag','Sports Cap','Premium Keychain Set','Men Wrist Bracelet','Ladies Watch Gift Set','Compact Jewelry Box','Satin Hair Band','Unisex Winter Beanie','Fashion Anklet Set','Travel Passport Holder','Belt Bag Waist Pouch','Shoe Organizer','Wallet and Belt Gift Box','Oversized Square Sunglasses'] },
+  { category: 'Wireless & Audio', image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=800&auto=format&fit=crop', items: ['TWS Wireless Earbuds','Neckband Bluetooth Headset','Noise Cancelling Headphones','Karaoke Microphone','Bluetooth Soundbar','Mini Party Speaker','Gaming Headset with Mic','Wireless Earbud Case','Bluetooth FM Transmitter','Portable Radio Speaker','Type-C Earphones','Over Ear DJ Headphones','Wireless Lavalier Mic','RGB Gaming Speaker','Sleep Headband Headphones','Clip On Earphones','Stereo AUX Cable','Bluetooth Car Kit','Waterproof Shower Speaker','Kids Cat Ear Headphones','Wireless Audio Receiver','Mini Voice Recorder','Podcast Microphone Kit','Portable Amplifier','Bluetooth Alarm Speaker','True Wireless Sport Earbuds','Headphone Carrying Case'] },
+];
+const prices = [499,699,899,1099,1299,1499,1799,1999,2299,2499,2799,2999,3499,3999,4499,4999,5499,5999];
+const tags = ['In Stock','Fast Moving','Bestseller','Limited Stock','New Arrival','Ready to Ship'];
+const featuredProducts = [
+  { id: 1, name: 'T900 Ultra Smartwatch Series 8', price: 1850, category: 'Gadgets', rating: 4.8, image: '/p1.jpg', stock: 'Bestseller' },
+  { id: 2, name: 'AirPods Pro Gen 2 (High Quality Copy)', price: 2100, category: 'Gadgets', rating: 4.7, image: '/p2.jpg', stock: 'Fast Moving' },
+  { id: 3, name: 'P47 Wireless Bluetooth Headphones', price: 1150, category: 'Gadgets', rating: 4.5, image: '/p3.jpg', stock: 'In Stock' },
+  { id: 4, name: 'M10 TWS Wireless Earbuds with Powerbank Case', price: 1450, category: 'Gadgets', rating: 4.9, image: '/p4.jpg', stock: 'Bestseller' },
+  { id: 5, name: 'RGB Gaming Mouse and Keyboard Combo', price: 2400, category: 'Gadgets', rating: 4.6, image: '/p5.jpg', stock: 'Ready to Ship' },
+  { id: 6, name: 'LED Sunset Lamp with Remote', price: 950, category: 'Home', rating: 4.4, image: '/p6.jpg', stock: 'New Arrival' },
+  { id: 7, name: 'Automatic Rechargeable Water Dispenser Pump', price: 890, category: 'Home', rating: 4.7, image: '/p7.jpg', stock: 'Fast Moving' },
+  { id: 8, name: 'Mini Portable USB Juicer Blender', price: 1650, category: 'Home', rating: 4.8, image: '/p8.jpg', stock: 'In Stock' },
 ];
 
-const testimonials = [
-  { name: 'Usman Ali — Lahore', quote: 'The camera quality is excellent, delivery was super fast, and the order flow was smooth from start to finish.', rating: 5 },
-  { name: 'Ayesha Khan — Karachi', quote: 'I ordered a desk lamp and a power bank. Everything arrived as promised and the product quality exceeded expectations.', rating: 5 },
-  { name: 'Bilal Ahmed — Islamabad', quote: 'The COD experience feels premium and safe. The product catalog is easy to use and very polished.', rating: 5 },
+// 143 diverse, realistic wholesale mock listings used by this marketplace.
+export const products = [
+  ...featuredProducts,
+  ...groups.flatMap((group, groupIndex) => group.items.map((name, itemIndex) => ({
+    id: groupIndex * group.items.length + itemIndex + featuredProducts.length + 1,
+    name,
+    category: group.category,
+    price: prices[(groupIndex * 5 + itemIndex) % prices.length],
+    rating: Number((4.3 + ((groupIndex + itemIndex) % 7) / 10).toFixed(1)),
+    stock: tags[(groupIndex + itemIndex) % tags.length],
+    image: group.image,
+  }))),
 ];
+const perks = [{ title: '100% Original Markaz Wholesale Margins', copy: 'Trusted products at reseller-friendly rates that leave room for real earnings.', icon: BadgeCheck },{ title: 'Fast Nationwide Delivery (COD)', copy: 'Fulfill orders across Pakistan with reliable cash-on-delivery service.', icon: Truck },{ title: 'Zero Investment Startup', copy: 'Begin sharing products without buying inventory upfront.', icon: Banknote },{ title: 'Easy Profit Margins for Resellers', copy: 'Clear product pricing makes it easy to set your margin.', icon: CircleDollarSign }];
+const trending = [{ name: 'Smart Gadgets', copy: 'Everyday tech that moves fast', icon: Sparkles, image: groups[0].image },{ name: 'Home & Kitchen', copy: 'Useful upgrades for every home', icon: ChefHat, image: groups[2].image },{ name: 'Fashion Accessories', copy: 'Easy-to-sell finishing touches', icon: TrendingUp, image: groups[3].image },{ name: 'Wireless & Audio', copy: 'Sound, freedom, and convenience', icon: Headphones, image: groups[4].image }];
+const faqs = [{ question: 'How does Cash on Delivery work?', answer: 'Place your order and pay the courier when your parcel arrives. COD availability is shown for eligible products and locations.' },{ question: 'What is the delivery time across Pakistan?', answer: 'Most orders arrive within 3 to 7 working days, depending on your destination and courier service.' },{ question: 'How do I track my orders?', answer: 'After dispatch, a tracking reference is sent by SMS or email. Use it with the courier to see the latest status.' }];
 
-export default function Home(): JSX.Element {
-  const cartCount = 2;
-
-  return (
-    <main className="min-h-screen bg-slate-900 text-slate-100 antialiased">
-
-      {/* Top Announcement Bar */}
-      <div className="bg-gradient-to-r from-purple-600 via-indigo-700 to-indigo-800 text-white text-xs text-center py-2 font-semibold">
-        FREE DELIVERY • CASH ON DELIVERY • TRUSTED GADGETS
+export default function Home() {
+  return <main className="min-h-screen bg-slate-950 text-slate-100 antialiased">
+    <div className="bg-gradient-to-r from-purple-600 via-indigo-700 to-indigo-800 py-2 text-center text-xs font-semibold text-white">FREE DELIVERY • CASH ON DELIVERY • TRUSTED GADGETS</div>
+    <header className="sticky top-0 z-40 border-b border-slate-800 bg-slate-950/85 backdrop-blur"><div className="mx-auto flex max-w-7xl items-center justify-between gap-5 px-6 py-4"><Link href="#" className="flex items-center gap-3"><b className="flex h-9 w-9 items-center justify-center rounded-full bg-purple-600">N</b><span><strong className="block text-lg">NextGen</strong><small className="text-slate-400">MARKETPLACE</small></span></Link><nav className="hidden gap-6 text-sm text-slate-300 md:flex"><Link href="#catalog">Shop</Link><Link href="#resell">Resell</Link><Link href="#faq">Support</Link></nav><div className="flex items-center gap-3"><label className="relative hidden sm:block"><Search size={17} className="absolute top-2.5 left-3 text-slate-400"/><input aria-label="Search products" className="w-60 rounded-full bg-slate-900 py-2 pr-4 pl-9 text-sm" placeholder="Search products"/></label><button aria-label="Cart" className="relative p-2"><ShoppingCart/><i className="absolute -top-1 -right-1 rounded-full bg-purple-600 px-1.5 text-xs not-italic">2</i></button><button aria-label="Menu" className="md:hidden"><Menu/></button></div></div></header>
+    <section className="mx-auto grid max-w-7xl items-center gap-12 px-6 py-16 md:grid-cols-2 md:py-24"><div><p className="inline-flex items-center gap-2 rounded-full border border-indigo-400/20 bg-slate-900 px-3 py-1 text-xs text-indigo-200"><PackageSearch size={14}/> TRUSTED BY 10,000+ SHOPPERS</p><h1 className="mt-6 text-4xl font-extrabold md:text-6xl">Smart tech for a <span className="text-purple-400">smarter life</span></h1><p className="mt-4 max-w-xl text-lg text-slate-300">Premium electronics, home essentials, and lifestyle upgrades with nationwide COD and fast fulfillment.</p><div className="mt-8 flex gap-4"><Link href="#catalog" className="rounded-full bg-purple-600 px-6 py-3 font-semibold">Shop Now</Link><Link href="#resell" className="rounded-full border border-slate-700 px-6 py-3">Why choose us</Link></div><div className="mt-10 flex gap-8"><div><b className="text-2xl">100+</b><small className="block text-slate-400">Products</small></div><div><b className="text-2xl">4.9/5</b><small className="block text-slate-400">Rating</small></div><div><b className="text-2xl">COD</b><small className="block text-slate-400">Nationwide</small></div></div></div><div className="relative h-72 overflow-hidden rounded-lg border border-slate-800 shadow-2xl md:h-96"><Image fill priority className="object-cover" alt="Modern technology" src="https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1600&auto=format&fit=crop"/></div></section>
+    <section className="border-y border-slate-800 py-6"><div className="mx-auto grid max-w-7xl grid-cols-2 gap-6 px-6 text-sm md:grid-cols-4"><div className="flex items-center gap-3"><Truck className="text-purple-400"/><span><b className="block">Free delivery</b><small className="text-slate-500">Above PKR 999</small></span></div><div className="flex items-center gap-3"><Banknote className="text-purple-400"/><span><b className="block">Secure checkout</b><small className="text-slate-500">COD available</small></span></div><div className="flex items-center gap-3"><BadgeCheck className="text-purple-400"/><span><b className="block">Original products</b><small className="text-slate-500">Quality checked</small></span></div><div className="flex items-center gap-3"><Watch className="text-purple-400"/><span><b className="block">Customer support</b><small className="text-slate-500">Here to help</small></span></div></div></section>
+    <section id="catalog" className="mx-auto max-w-7xl px-6 py-20">
+      <div className="mb-8 flex items-end justify-between">
+        <div>
+          <p className="text-sm font-semibold text-purple-400">FRESH STOCK</p>
+          <h2 className="mt-2 text-3xl font-bold">Products built to resell</h2>
+        </div>
+        <p className="text-sm text-slate-400">{products.length}-product wholesale catalog</p>
       </div>
 
-      {/* Sticky Header Navbar */}
-      <header className="sticky top-0 z-40 backdrop-blur bg-slate-900/60 border-b border-slate-800">
-        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between gap-6">
-          <div className="flex items-center gap-6">
-            <Link href="#" className="flex items-center gap-3">
-              <div className="w-9 h-9 bg-purple-600 rounded-full flex items-center justify-center text-white font-bold">N</div>
-              <div className="leading-tight">
-                <div className="text-lg font-extrabold">NextGen</div>
-                <div className="text-xs text-slate-400 -mt-1">MARKETPLACE</div>
-              </div>
-            </Link>
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {products.slice(0, 8).map((product) => {
+          const imageSrc = (typeof product.image === 'string' && product.image.startsWith('/'))
+            ? groups[(product.id - 1) % groups.length].image
+            : product.image;
 
-            <nav className="hidden md:flex items-center gap-6 text-sm text-slate-300">
-              <Link href="#">Home</Link>
-              <Link href="#" className="flex items-center gap-1">Shop <ChevronDown size={14} /></Link>
-              <Link href="#">Features</Link>
-              <Link href="#">Reviews</Link>
-              <Link href="#">Contact</Link>
-            </nav>
-          </div>
-
-          <div className="flex items-center gap-4">
-            <label className="relative hidden sm:block">
-              <Search size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
-              <input aria-label="Search" className="w-64 pl-10 pr-4 py-2 rounded-full bg-slate-800 text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-purple-600" placeholder="Search smart gadgets" />
-            </label>
-
-            <button aria-label="Cart" className="relative p-2 rounded-full hover:bg-slate-800 transition">
-              <ShoppingCart size={22} className="text-slate-200" />
-              <span className="absolute -top-1 -right-1 bg-purple-600 text-xs w-5 h-5 rounded-full flex items-center justify-center font-semibold text-white">{cartCount}</span>
-            </button>
-
-            <button className="p-2 rounded-md md:hidden hover:bg-slate-800 transition"><Menu className="text-slate-300" /></button>
-          </div>
-        </div>
-      </header>
-
-      {/* Hero Section */}
-      <section className="max-w-7xl mx-auto px-6 py-16 md:py-24 grid md:grid-cols-2 gap-12 items-center">
-        <div>
-          <div className="inline-flex items-center gap-2 bg-slate-800/60 text-indigo-200 text-xs font-medium px-3 py-1 rounded-full">
-            <PackageSearch size={14} /> TRUSTED BY 10,000+ SHOPPERS
-          </div>
-
-          <h1 className="mt-6 text-4xl md:text-6xl font-extrabold leading-tight">
-            Smart tech for a <span className="text-purple-400">smarter life</span>
-          </h1>
-
-          <p className="mt-4 text-slate-300 text-lg max-w-xl">Discover premium electronics, smart home essentials, and lifestyle upgrades with nationwide COD and lightning-fast fulfillment.</p>
-
-          <div className="mt-8 flex flex-wrap items-center gap-4">
-            <Link href="#" className="inline-flex items-center gap-2 bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-6 py-3 rounded-full font-semibold shadow-lg hover:opacity-95">Shop Now</Link>
-            <Link href="#" className="inline-flex items-center gap-2 border border-slate-700 px-6 py-3 rounded-full text-slate-200 hover:bg-slate-800">Why choose us</Link>
-          </div>
-
-          <div className="mt-10 flex gap-8 text-slate-300">
-            <div>
-              <div className="text-2xl font-bold text-white">30+</div>
-              <div className="text-sm">Products</div>
-            </div>
-            <div>
-              <div className="text-2xl font-bold text-white">4.9/5</div>
-              <div className="text-sm">Rating</div>
-            </div>
-            <div>
-              <div className="text-2xl font-bold text-white">COD</div>
-              <div className="text-sm">Nationwide</div>
-            </div>
-          </div>
-        </div>
-
-        <div className="rounded-3xl overflow-hidden bg-slate-800/40 p-3 border border-slate-700 shadow-2xl">
-          <div className="relative w-full h-64 md:h-80 lg:h-96">
-            <Image src="https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1600&auto=format&fit=crop" alt="Circuit art" fill className="object-cover rounded-2xl" />
-          </div>
-        </div>
-      </section>
-
-      {/* Benefits Bar */}
-      <section className="py-6 border-y border-slate-800">
-        <div className="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-6 text-sm text-slate-300">
-          <div className="flex items-center gap-3"><Truck className="text-purple-400" /> <div><div className="font-medium">Free delivery</div><div className="text-xs text-slate-500">Above PKR 999</div></div></div>
-          <div className="flex items-center gap-3"><CreditCard className="text-purple-400" /> <div><div className="font-medium">Secure checkout</div><div className="text-xs text-slate-500">COD available</div></div></div>
-          <div className="flex items-center gap-3"><RotateCcw className="text-purple-400" /> <div><div className="font-medium">Easy returns</div><div className="text-xs text-slate-500">7-day policy</div></div></div>
-          <div className="flex items-center gap-3"><Headset className="text-purple-400" /> <div><div className="font-medium">24/7 support</div><div className="text-xs text-slate-500">Always available</div></div></div>
-        </div>
-      </section>
-
-      {/* Popular Categories */}
-      <section className="max-w-7xl mx-auto px-6 py-20">
-        <div className="flex items-center justify-between mb-8">
-          <h2 className="text-3xl font-bold">Popular categories</h2>
-          <Link href="#" className="text-purple-400 text-sm font-medium flex items-center gap-1">Browse all products <ArrowRight size={16} /></Link>
-        </div>
-
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-          {categories.map((cat) => (
-            <Link key={cat.name} href="#" className="group block rounded-2xl overflow-hidden border border-slate-700 bg-slate-800/30 shadow-lg">
-              <div className="relative w-full h-40 md:h-48">
-                <Image src={cat.image} alt={cat.name} fill className="object-cover transform group-hover:scale-105 transition-transform duration-300" />
+          return (
+            <article key={product.id} className="overflow-hidden rounded-lg border border-slate-800 bg-slate-900 transition hover:-translate-y-1 hover:border-purple-500 hover:shadow-xl hover:shadow-purple-950">
+              <div className="relative h-36">
+                <Image fill className="object-cover" alt={product.name} src={imageSrc} />
+                <span className="absolute top-3 left-3 rounded-full bg-slate-950/90 px-2 py-1 text-xs text-purple-200">{product.stock}</span>
               </div>
               <div className="p-4">
-                <h3 className="font-semibold text-lg text-slate-100">{cat.name}</h3>
+                <small className="text-slate-500">{product.category} · {product.rating} ★</small>
+                <h3 className="mt-1 min-h-10 text-sm font-semibold">{product.name}</h3>
+                <b className="mt-3 block">PKR {product.price.toLocaleString('en-PK')}</b>
               </div>
-            </Link>
-          ))}
-        </div>
-      </section>
-
-      {/* Limited Offer Banner */}
-      <section className="max-w-7xl mx-auto px-6 py-10">
-        <div className="rounded-3xl p-8 md:p-12 grid md:grid-cols-2 items-center gap-6 border border-slate-700 shadow-2xl bg-gradient-to-r from-indigo-900 to-purple-700">
-          <div>
-            <div className="text-sm text-indigo-200 mb-2">LIMITED OFFER</div>
-            <h3 className="text-3xl md:text-4xl font-bold text-white mb-3">Smart home bundle with 60% savings</h3>
-            <p className="text-slate-200 mb-6">Secure your home with premium motion sensors, lights, and smart automation essentials at an exclusive launch price.</p>
-            <Link href="#" className="inline-block bg-white text-purple-700 px-6 py-3 rounded-full font-semibold shadow">Grab the bundle</Link>
-          </div>
-
-          <div className="flex items-center justify-center">
-            <div className="text-center bg-white/6 p-6 rounded-2xl border border-white/10">
-              <div className="text-sm text-slate-300">SAVE UP TO</div>
-              <div className="text-5xl font-extrabold text-white my-2">60%</div>
-              <div className="text-sm text-slate-300">on smart essentials</div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Testimonials */}
-      <section className="max-w-7xl mx-auto px-6 py-20">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold">People love shopping with us</h2>
-          <div className="text-sm text-purple-300 mt-2">Real reviews from local shoppers</div>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {testimonials.map((t, i) => (
-            <div key={i} className="bg-slate-800 p-6 rounded-2xl border border-slate-700">
-              <div className="flex items-center gap-2 mb-3 text-yellow-400">
-                {Array.from({ length: t.rating }).map((_, idx) => <Star key={idx} size={16} className="text-yellow-400" />)}
-              </div>
-              <p className="text-slate-300 italic text-lg">“{t.quote}”</p>
-              <div className="mt-4 text-sm text-slate-400 font-medium border-t border-slate-700 pt-4">{t.name}</div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer className="bg-slate-900 border-t border-slate-800 mt-20 py-10 text-center text-sm text-slate-400">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            <div>© {new Date().getFullYear()} NextGen Marketplace. All rights reserved.</div>
-            <div className="flex items-center gap-4">
-              <Link href="#" className="text-slate-400 hover:text-slate-200">Privacy Policy</Link>
-              <span className="text-slate-600">•</span>
-              <Link href="#" className="text-slate-400 hover:text-slate-200">Terms of Service</Link>
-            </div>
-          </div>
-        </div>
-      </footer>
-
-    </main>
-  );
+            </article>
+          );
+        })}
+      </div>
+    </section>
+    <section id="resell" className="border-y border-slate-800 bg-slate-900/40"><div className="mx-auto max-w-7xl px-6 py-20"><p className="text-sm font-semibold text-purple-400">RESELL WITH CONFIDENCE</p><h2 className="mt-2 text-3xl font-bold">Why Resell With Us</h2><div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-4">{perks.map(perk => { const Icon = perk.icon; return <article key={perk.title} className="rounded-lg border border-slate-800 bg-slate-900 p-6"><Icon className="mb-5 text-purple-300" size={27}/><h3 className="font-semibold">{perk.title}</h3><p className="mt-3 text-sm leading-6 text-slate-400">{perk.copy}</p></article> })}</div></div></section>
+    <section className="mx-auto max-w-7xl px-6 py-20"><p className="text-sm font-semibold text-purple-400">WHAT&apos;S MOVING</p><h2 className="mt-2 text-3xl font-bold">Trending Categories</h2><div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">{trending.map(item => { const Icon = item.icon; return <Link href="#catalog" key={item.name} className="group relative min-h-60 overflow-hidden rounded-lg border border-slate-800 bg-slate-900 p-6 transition hover:-translate-y-1 hover:border-purple-400 hover:shadow-xl hover:shadow-purple-700/20"><Image fill src={item.image} alt="" className="object-cover opacity-20 group-hover:scale-110 group-hover:opacity-35"/><div className="relative flex h-full flex-col"><Icon className="text-purple-300" size={27}/><div className="mt-auto"><h3 className="text-xl font-bold">{item.name}</h3><p className="mt-2 text-sm text-slate-300">{item.copy}</p><span className="mt-5 flex items-center gap-1 text-sm text-purple-300">Explore <ArrowRight size={15}/></span></div></div></Link> })}</div></section>
+    <section className="mx-auto max-w-7xl px-6 py-10"><div className="grid gap-8 rounded-lg border border-indigo-400/25 bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 p-8 md:grid-cols-[1.5fr_1fr] md:p-12"><div><p className="text-sm font-semibold text-indigo-300">FOR GROWING BUSINESSES</p><h2 className="mt-3 text-3xl font-bold">Wholesale &amp; Bulk Orders</h2><p className="mt-4 text-slate-300">Special discounts on fast-moving products for your store, social shop, or reseller business across Pakistan.</p><Link href="mailto:resellers@nextgen.pk" className="mt-7 inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 font-semibold text-slate-950">Join Reseller Network <ArrowRight size={17}/></Link></div><div className="border-indigo-400/20 md:border-l md:pl-8"><b className="text-4xl">Bulk rates</b><p className="mt-2 text-sm text-slate-400">For resellers, retailers, and high-volume orders.</p></div></div></section>
+    <section id="faq" className="mx-auto max-w-4xl px-6 py-20"><div className="mb-10 text-center"><p className="text-sm font-semibold text-purple-400">HELP CENTER</p><h2 className="mt-2 text-3xl font-bold">Frequently asked questions</h2></div><div className="space-y-3">{faqs.map(faq => <details key={faq.question} className="group rounded-lg border border-slate-800 bg-slate-900 px-5"><summary className="flex cursor-pointer list-none items-center justify-between gap-4 py-5 font-semibold">{faq.question}<ChevronDown className="text-purple-400 group-open:rotate-180"/></summary><p className="border-t border-slate-800 py-4 text-sm leading-6 text-slate-400">{faq.answer}</p></details>)}</div></section>
+    <footer className="border-t border-slate-800 bg-slate-950"><div className="mx-auto grid max-w-7xl gap-10 px-6 py-14 sm:grid-cols-2 lg:grid-cols-4"><div><b className="text-lg">NextGen Marketplace</b><p className="mt-4 text-sm leading-6 text-slate-400">Smart products and wholesale opportunities for customers and resellers across Pakistan.</p></div><div><b>Quick links</b><div className="mt-4 space-y-3 text-sm text-slate-400"><Link className="block hover:text-white" href="#catalog">Shop products</Link><Link className="block hover:text-white" href="#resell">Reseller program</Link><Link className="block hover:text-white" href="#faq">FAQs</Link></div></div><div><b>Support</b><a className="mt-4 flex items-center gap-2 text-sm text-slate-400 hover:text-white" href="mailto:support@nextgen.pk"><Mail size={16}/>support@nextgen.pk</a></div><div><b>Follow along</b><div className="mt-4 flex gap-3"><a aria-label="Website" href="#"><Globe2/></a><a aria-label="Telegram" href="#"><Send/></a><a aria-label="WhatsApp" href="#"><MessageCircle/></a></div><p className="mt-5 text-xs leading-5 text-slate-500">Product images are illustrative placeholders. Prices and stock labels are mock data and may change.</p></div></div><div className="border-t border-slate-800"><div className="mx-auto flex max-w-7xl justify-between gap-3 px-6 py-6 text-xs text-slate-500"><span>© {new Date().getFullYear()} NextGen Marketplace. All rights reserved.</span><span>For customers and resellers across Pakistan.</span></div></div></footer>
+  </main>;
 }
