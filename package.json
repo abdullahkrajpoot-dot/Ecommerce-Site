@@ -1,12 +1,22 @@
 {
-  "name": "nextgen-store",
+  "name": "nextgen-monorepo",
   "version": "1.0.0",
   "private": true,
+  "workspaces": [
+    "client",
+    "server"
+  ],
   "scripts": {
-    "build": "echo 'Build complete'",
-    "start": "echo 'Production deployment on Vercel'"
+    "dev": "concurrently \"pnpm --filter client dev\" \"pnpm --filter server dev\"",
+    "build": "pnpm -w -r build",
+    "start": "pnpm -w -r start",
+    "lint": "pnpm -w -r lint"
+  },
+  "devDependencies": {
+    "concurrently": "^8.0.0"
   },
   "dependencies": {
+    "lucide-react": "^1.45.0",
     "pg": "^8.10.0"
   }
 }
